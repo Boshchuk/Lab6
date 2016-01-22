@@ -4,9 +4,70 @@
 #include "stdafx.h"
 #include <string>
 #include <iostream>
+#include <vector>
 
 
-void check(std::string s)
+std::string Sdvig(std::string str)
+{
+	std::string result;
+	result = str.substr(1, 5) + str[0];
+
+	return result;
+}
+
+
+std::string mirror(std::string str)
+{
+	std::string result;
+
+	for (auto i = str.length(); i > 0; i--)
+	{
+		result = result + str[i];
+	}
+	return result;
+}
+
+std::vector<std::string> GetVariants (std::string str)
+{
+	std::vector<std::string> result;
+
+	result.push_back(str);
+	auto fm = mirror(str);
+	result.push_back(fm);
+
+	std::string t = str;
+
+	for (auto i = 0; i < 5; i ++)
+	{
+		t = Sdvig(t);
+		result.push_back(t);
+		auto tm = mirror(t);
+		result.push_back(tm);
+	}
+
+	return result;
+}
+
+bool IsInCombination(std::string str, std::vector<std::string> combination)
+{
+	
+	auto same = GetVariants(str);
+
+	for (auto it = combination.begin(); it != combination.end(); ++it)
+	{
+		for (auto sam = same.begin(); sam!= same.end(); ++sam)
+		{
+			if (*it == *sam)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+std::vector<std::string> check(std::string s, std::vector<std::string> combination)
 {
 	std::string s1;
 
@@ -39,8 +100,24 @@ void check(std::string s)
 
 	if (s1.length() == 6)
 	{
-		std::cout << s1 << std::endl;
+		if (combination.size() == 0)
+		{
+			std::cout << s1 << std::endl;
+			combination.push_back(s1);
+			
+		}
+		else
+		{
+			if( !IsInCombination(s1,combination))
+			{
+				std::cout << s1 << std::endl;
+				combination.push_back(s1);
+				
+			}
+		}
+		
 	}
+	return combination;
 }
 
 int main()
@@ -53,6 +130,7 @@ int main()
 	h[1] = 'R';
 	h[2] = 'W';
 
+	std::vector<std::string> com;
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
@@ -65,13 +143,15 @@ int main()
 					{
 						for (n = 0; n < 3; n++)
 						{
-							check(h[i] + h[j] + h[k] + h[l] + h[m] + h[n]);
+							com = check(h[i] + h[j] + h[k] + h[l] + h[m] + h[n], com);
 						}
 					}
 				}
 			}
 		}
 	}
+	std::cout << std::endl;
+	std::cout << "Ne povtorki" <<com.size()<<std::endl;
 
 	return 0;
 }
