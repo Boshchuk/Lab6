@@ -1,5 +1,4 @@
 // Lab6.cpp : Defines the entry point for the console application.
-//
 
 #include "stdafx.h"
 #include <string>
@@ -53,7 +52,7 @@ bool IsInCombination(std::string str, std::vector<std::string> combination)
 	
 	auto same = GetVariants(str);
 
-	for (auto it = combination.begin(); it != combination.end(); ++it)
+	for (std::vector<std::basic_string<char>>::iterator it = combination.begin(); it != combination.end(); ++it)
 	{
 		for (auto sam = same.begin(); sam!= same.end(); ++sam)
 		{
@@ -100,12 +99,13 @@ std::vector<std::string> check(std::string s, std::vector<std::string> combinati
 
 	if (s1.length() == 6)
 	{
-		if (combination.size() == 0)
+		//if (combination.size() == 0)
 		{
 			std::cout << s1 << std::endl;
 			combination.push_back(s1);
 			
 		}
+		/*
 		else
 		{
 			if( !IsInCombination(s1,combination))
@@ -114,7 +114,7 @@ std::vector<std::string> check(std::string s, std::vector<std::string> combinati
 				combination.push_back(s1);
 				
 			}
-		}
+		}*/
 		
 	}
 	return combination;
@@ -126,9 +126,9 @@ int main()
 
 	std::string h[3];
 
-	h[0] = 'B';
-	h[1] = 'R';
-	h[2] = 'W';
+	h[0] = '0';
+	h[1] = '1';
+	h[2] = '2';
 
 	std::vector<std::string> com;
 	for (i = 0; i < 3; i++)
